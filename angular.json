@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "ad8f3d3d-a174-4c4f-84e2-ef8606b3887d"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -48,9 +51,26 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/libs/c3/c3.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "src/styles.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "src/assets/libs/node-waves/waves.min.js",
+              "src/assets/libs/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/libs/metismenu/metisMenu.min.js",
+
+              "src/assets/libs/peity/jquery.peity.min.js",
+              "src/assets/libs/d3/d3.min.js",
+              "src/assets/libs/c3/c3.min.js",
+              "src/assets/libs/jquery-knob/jquery.knob.min.js",
+              "src/assets/js/pages/dashboard.init.js"
+            ]
           },
           "configurations": {
             "production": {

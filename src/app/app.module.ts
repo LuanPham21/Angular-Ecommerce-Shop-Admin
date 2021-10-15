@@ -6,6 +6,10 @@ import { AppComponent } from './app.component';
 
 import {MenubarModule} from 'primeng/menubar';
 import { SharedModule } from './shared/shared.module';
+import {DialogModule} from 'primeng/dialog';
+import {EditorModule} from 'primeng/editor';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,11 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
 
 
-    MenubarModule
+    MenubarModule,
+    DialogModule,
+    EditorModule,
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

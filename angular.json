@@ -51,12 +51,16 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/libs/c3/c3.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css"
+
+              "node_modules/primeng/resources/primeng.min.css",
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -69,7 +73,8 @@
               "src/assets/libs/d3/d3.min.js",
               "src/assets/libs/c3/c3.min.js",
               "src/assets/libs/jquery-knob/jquery.knob.min.js",
-              "src/assets/js/pages/dashboard.init.js"
+              "src/assets/js/pages/dashboard.init.js",
+              "./node_modules/quill/dist/quill.js"
             ]
           },
           "configurations": {

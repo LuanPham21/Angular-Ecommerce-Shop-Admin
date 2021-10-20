@@ -5,12 +5,12 @@ import 'rxjs/add/operator/takeUntil';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-manage-products-group',
-  templateUrl: './manage-products-group.component.html',
-  styleUrls: ['./manage-products-group.component.css']
+  selector: 'app-manage-product-brand',
+  templateUrl: './manage-product-brand.component.html',
+  styleUrls: ['./manage-product-brand.component.css']
 })
-export class ManageProductsGroupComponent extends BaseComponent implements OnInit {
-  public products_group:any;
+export class ManageProductBrandComponent extends BaseComponent implements OnInit {
+  public brands:any;
   public page = 1;
   public pageSize = 3;
   public totalItems:any;
@@ -20,8 +20,8 @@ export class ManageProductsGroupComponent extends BaseComponent implements OnIni
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this._api.post('/api/NhomSanPham/group-all-paginate',{page: this.page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
-        this.products_group = res.data;
+      this._api.post('/api/HangSanPham/brand-all-paginate',{page: this.page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
+        this.brands = res.data;
         this.totalItems = res.totalItems;
         setTimeout(() => {
           this.loadScripts();
@@ -30,16 +30,16 @@ export class ManageProductsGroupComponent extends BaseComponent implements OnIni
     });
   }
   displayAdd: boolean = false;
-
   showAdd() {
       this.displayAdd = true;
   }
   loadPage(page) { 
     this._route.params.subscribe(params => {
-      this._api.post('/api/NhomSanPham/group-all-paginate', { page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
-        this.products_group = res.data;
+      this._api.post('/api/HangSanPham/category-all-paginate', { page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
+        this.brands = res.data;
         this.totalItems = res.totalItems;
         }, err => { });       
    });   
   }
 }
+

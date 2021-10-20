@@ -1,31 +1,46 @@
 <div class="vertical-menu">
-
+    
     <div data-simplebar class="h-100">
-
+        
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">Main</li>
-
-
+                
+                
                 <li>
-                    <a href="javascript: void(0);" class="waves-effect">
+                    <a [routerLink]="['/dashboard']"  class="waves-effect">
                         <span class="badge rounded-pill bg-primary float-end">20+</span>
                         <i class="mdi mdi-view-dashboard"></i>
                         <span> Dashboard </span>
                     </a>
                 </li>
-
+                
                 <li>
-                    <a [routerLink]="['/manage-products']" routerLinkActive="router-link-active"  class="waves-effect">
-                        <span class="badge rounded-pill bg-primary float-end">20+</span>
+                    <a [routerLink]="['/manage-products-group']" class="waves-effect">
                         <i class="mdi mdi-view-dashboard"></i>
-                        <span> Products </span>
+                        <span> Nhóm sản phẩm </span>
                     </a>
                 </li>
-
-
+                <li>
+                    <a [routerLink]="['/manage-categories']"  class="waves-effect">
+                        <i class="mdi mdi-view-dashboard"></i>
+                        <span> Loại sản phẩm </span>
+                    </a>
+                </li>
+                  <li>
+                    <a [routerLink]="['/manage-product-brand']"  class="waves-effect">
+                        <i class="mdi mdi-view-dashboard"></i>
+                        <span> Hãng sản phẩm </span>
+                    </a>
+                </li>
+                <li>
+                    <a [routerLink]="['/manage-products']"  class="waves-effect">
+                        <i class="mdi mdi-view-dashboard"></i>
+                        <span> Sản phẩm </span>
+                    </a>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="mdi mdi-email-outline"></i>
@@ -37,11 +52,11 @@
                         <li><a href="email-compose.html">Email Compose</a></li>
                     </ul>
                 </li>
-
-
-
                 
-
+                
+                
+                
+                
             </ul>
         </div>
         <!-- Sidebar -->

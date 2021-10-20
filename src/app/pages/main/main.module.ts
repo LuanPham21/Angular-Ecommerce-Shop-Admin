@@ -16,6 +16,8 @@ import {DialogModule} from 'primeng/dialog';
 import {EditorModule} from 'primeng/editor';
 import { FormsModule } from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
+import {DropdownModule} from 'primeng/dropdown';
+import { ManageProductBrandComponent } from './manage-product-brand/manage-product-brand.component';
 
 export const mainRoute: Routes = [
   {
@@ -38,6 +40,10 @@ export const mainRoute: Routes = [
       {
         path: 'manage-categories',
         component: ManageCategoriesComponent,
+      },
+      {
+        path: 'manage-product-brand',
+        component: ManageProductBrandComponent,
       },
       {
         path: 'manage-products',
@@ -64,8 +70,9 @@ export const mainRoute: Routes = [
     FormsModule,
     DialogModule,
     EditorModule,
-    ButtonModule
+    ButtonModule,
+    DropdownModule
   ],
-  declarations: [MainComponent, DashboardComponent, ManageCategoriesComponent, ManageProductsGroupComponent, ManageProductsComponent, ManageUsersComponent, ManageOrdersComponent]
+  declarations: [MainComponent, DashboardComponent, ManageCategoriesComponent, ManageProductsGroupComponent, ManageProductsComponent, ManageUsersComponent, ManageOrdersComponent, ManageProductBrandComponent]
 })
 export class MainModule { }

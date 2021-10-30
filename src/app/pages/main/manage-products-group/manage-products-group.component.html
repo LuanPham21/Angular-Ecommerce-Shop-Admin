@@ -7,29 +7,30 @@
     </div>
 </div>
 <div class="bot">
-    <table class="table table-hover">
-        <thead style="text-align: center;">
-            <th>STT</th>
-            <th>Mã nhóm</th>
-            <th>Tên nhóm</th>
-            <th>Mô tả</th>
-            <th>Thao tác</th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let product_group of products_group let i = index">
+    <p-table selectionMode="single" [value]="products_group" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}" >
+        <ng-template pTemplate="header">
+            <tr>
+                <th>STT</th>
+                <th>Mã nhóm</th>
+                <th>Tên nhóm</th>
+                <th>Mô tả</th>
+                <th>Thao tác</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product  let-i="rowIndex" let-expanded="expanded">
+            <tr>
                 <td style="text-align: center;">{{i+1}}</td>
-                <td style="text-align: center;">{{product_group.maNhom}}</td>
-                <td>{{product_group.tenNhom}}</td>
-                <td>{{product_group.moTa}}</td>
+                <td style="text-align: center;">{{product.maNhom}}</td>
+                <td>{{product.tenNhom}}</td>
+                <td>{{product.moTa}}</td>
                 <td  style="text-align: center;">
-                    <button pButton type="button" title="Xem"  class="p-button-success"><i class="fas fa-eye"></i></button>
                     <button pButton type="button" title="Sửa"  class="p-button-secondary"><i class="fas fa-edit"></i></button>
                     <button pButton type="button" title="Xóa"  class="p-button-danger"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
-        </tbody>
-    </table>
-    <div style="position: relative;margin-left: 40%;">
+        </ng-template>
+    </p-table>
+    <div class="mt-5" style="position: relative;margin-left: 40%;">
         <ngb-pagination [collectionSize]="totalItems" [pageSize]="pageSize" [(page)]="page" [maxSize]="10" [rotate]="true" (pageChange)="loadPage($event)"></ngb-pagination>
     </div>
 </div>

@@ -10,14 +10,19 @@ import { ManageProductsGroupComponent } from './manage-products-group/manage-pro
 import { ManageProductsComponent } from './manage-products/manage-products.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
+import { ManageProductBrandComponent } from './manage-product-brand/manage-product-brand.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {EditorModule} from 'primeng/editor';
 import { FormsModule } from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
-import { ManageProductBrandComponent } from './manage-product-brand/manage-product-brand.component';
+import {PanelModule} from 'primeng/panel';
+import {TableModule} from 'primeng/table';
+import { RoleGuard } from '../../core/auth.guard';
+import { Role } from '../../shared/models/Role';
 
 export const mainRoute: Routes = [
   {
@@ -52,6 +57,8 @@ export const mainRoute: Routes = [
       {
         path: 'manage-users',
         component: ManageUsersComponent,
+        canActivate: [RoleGuard],
+        data: { roles: [Role.Admin] },
       },
       {
         path: 'manage-orders',
@@ -65,13 +72,16 @@ export const mainRoute: Routes = [
     CommonModule,
     SharedModule,
     HttpClientModule,
+    ReactiveFormsModule,
     RouterModule.forChild(mainRoute),
     NgbModule,
     FormsModule,
     DialogModule,
     EditorModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule,
+    PanelModule,
+    TableModule
   ],
   declarations: [MainComponent, DashboardComponent, ManageCategoriesComponent, ManageProductsGroupComponent, ManageProductsComponent, ManageUsersComponent, ManageOrdersComponent, ManageProductBrandComponent]
 })

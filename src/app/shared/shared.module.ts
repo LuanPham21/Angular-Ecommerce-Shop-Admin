@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { LeftSlidebarComponent } from './components/left-slidebar/left-slidebar.component';
 import { RouterModule } from '@angular/router';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 
 @NgModule({
@@ -10,7 +11,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule
   ],
-  declarations: [TopbarComponent, LeftSlidebarComponent],
+  declarations: [TopbarComponent, LeftSlidebarComponent, UnauthorizedComponent],
   exports: [
     TopbarComponent, LeftSlidebarComponent
   ]

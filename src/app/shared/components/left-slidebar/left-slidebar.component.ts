@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseComponent } from 'src/app/core/base-component';
+import { AuthenticationService } from '../../../core/authentication.service';
+import { BaseComponent } from '../../../core/base-component';
 
 @Component({
   selector: 'app-left-slidebar',
@@ -9,8 +10,12 @@ import { BaseComponent } from 'src/app/core/base-component';
 })
 export class LeftSlidebarComponent extends BaseComponent implements OnInit, AfterViewInit{
   
-  constructor(injector: Injector, private router: Router) {
+  constructor(injector: Injector, private router: Router, private authenticationService: AuthenticationService) {
     super(injector);
+     // redirect to home if already logged in
+    //  if (this.authenticationService.userValue) {
+    //   this.router.navigate(['/auth/login']);
+    // }
   }
   ngOnInit() {}
   onLogin(){
@@ -18,6 +23,9 @@ export class LeftSlidebarComponent extends BaseComponent implements OnInit, Afte
   }
   onRegister(){
     this.router.navigate(['/auth/register']);
+  }
+  onLogOut(){
+    this.authenticationService.logout();
   }
   ngAfterViewInit() { 
     this.loadScripts(); 

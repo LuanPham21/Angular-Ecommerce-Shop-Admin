@@ -52,13 +52,13 @@ export const mainRoute: Routes = [
       },
       {
         path: 'manage-products',
-        component: ManageProductsComponent,
+        component: ManageProductsComponent
       },
       {
         path: 'manage-users',
         component: ManageUsersComponent,
-        canActivate: [RoleGuard],
-        data: { roles: [Role.Admin] },
+        canActivate: [RoleGuard], data: { roles: [Role.Admin] },
+       
       },
       {
         path: 'manage-orders',

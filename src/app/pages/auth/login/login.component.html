@@ -16,29 +16,33 @@
                             <h4 class="font-size-18 mt-2 text-center">Welcome Back !</h4>
                             <p class="text-muted text-center mb-4">Sign in to continue to Admiria.</p>
 
-                            <form class="form-horizontal" action="index.html">
+                            <form class="form-horizontal" [formGroup]="frmLogin" (ngSubmit)="onSubmit()">
 
                                 <div class="mb-3">
                                     <label class="form-label" for="username">Username</label>
-                                    <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                    <input type="text" formControlName="TaiKhoan" class="form-control" id="username" placeholder="Enter username">
                                 </div>
-
+                                <div *ngIf="submitted && f.TaiKhoan.errors" class="invalid-feedback">
+                                    <div *ngIf="f.TaiKhoan.errors.required">Chưa nhập tài khoản!</div>
+                                </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="userpassword">Password</label>
-                                    <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                                    <input type="password" formControlName="MatKhau" class="form-control" id="userpassword" placeholder="Enter password">
                                 </div>
-
+                                <div *ngIf="submitted && f.MatKhau.errors" class="invalid-feedback">
+                                    <div *ngIf="f.MatKhau.errors.required">Chưa nhập mật khẩu!</div>
+                                </div>
                                 <div class="row mt-4">
                                     <div class="col-sm-6">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="customControlInline">
+                                            <input formControlName="remember" class="form-check-input" type="checkbox" value="" id="customControlInline">
                                             <label class="form-check-label" for="customControlInline">
                                                 Remember me
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 text-end">
-                                        <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
+                                        <button [disabled]="frmLogin.invalid || loading" class="btn btn-primary w-md waves-effect waves-light" type="submit">Log In</button>
                                     </div>
                                 </div>
 

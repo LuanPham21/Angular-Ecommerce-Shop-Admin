@@ -63,7 +63,9 @@
               "./node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
+              "src/assets/js/pages/jquery.2.1.1.min.js",
               "node_modules/jquery/dist/jquery.js",
+              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
               "src/assets/libs/node-waves/waves.min.js",
               "src/assets/libs/bootstrap/js/bootstrap.bundle.min.js",

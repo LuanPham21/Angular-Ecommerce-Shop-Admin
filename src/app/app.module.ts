@@ -15,7 +15,7 @@ import { ErrorInterceptor } from './core/error.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,8 @@ import { ErrorInterceptor } from './core/error.interceptor';
     DialogModule,
     EditorModule,
     BrowserAnimationsModule,
-    NgbModule,
+    NgbModule
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

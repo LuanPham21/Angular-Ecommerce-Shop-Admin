@@ -23,6 +23,7 @@ import {PanelModule} from 'primeng/panel';
 import {TableModule} from 'primeng/table';
 import { RoleGuard } from '../../core/auth.guard';
 import { Role } from '../../shared/models/Role';
+import { DateVNPipe } from '../../shared/pipes/DateVN.pipe';
 
 export const mainRoute: Routes = [
   {
@@ -83,6 +84,6 @@ export const mainRoute: Routes = [
     PanelModule,
     TableModule
   ],
-  declarations: [MainComponent, DashboardComponent, ManageCategoriesComponent, ManageProductsGroupComponent, ManageProductsComponent, ManageUsersComponent, ManageOrdersComponent, ManageProductBrandComponent]
+  declarations: [MainComponent, DashboardComponent, ManageCategoriesComponent, ManageProductsGroupComponent, ManageProductsComponent, ManageUsersComponent, ManageOrdersComponent, ManageProductBrandComponent, DateVNPipe]
 })
 export class MainModule { }

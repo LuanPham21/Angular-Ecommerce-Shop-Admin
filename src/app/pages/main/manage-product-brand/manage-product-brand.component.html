@@ -21,7 +21,7 @@
                 <td style="text-align: center;">{{i+1}}</td>
                 <td style="text-align: center;">{{brand.maHang}}</td>
                 <td style="text-align: center;">{{brand.tenHang}}</td>
-                <td>{{brand.moTa}}</td>
+                <td  [innerHtml]='brand.moTa'></td>
                 <td>{{brand.anh}}</td>
                 <td  style="text-align: center;">
                     <button pButton type="button" title="Sửa"  class="p-button-secondary"><i class="fas fa-edit"></i></button>

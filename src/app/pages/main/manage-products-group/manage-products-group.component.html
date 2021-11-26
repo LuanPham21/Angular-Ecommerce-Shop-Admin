@@ -22,10 +22,10 @@
                 <td style="text-align: center;">{{i+1}}</td>
                 <td style="text-align: center;">{{product.maNhom}}</td>
                 <td>{{product.tenNhom}}</td>
-                <td>{{product.moTa}}</td>
+                <td  [innerHtml]='product.moTa'></td>
                 <td  style="text-align: center;">
-                    <button pButton type="button" title="Sửa"  class="p-button-secondary"><i class="fas fa-edit"></i></button>
-                    <button pButton type="button" title="Xóa"  class="p-button-danger"><i class="fas fa-trash"></i></button>
+                    <button pButton type="button" (click)="edit(product)" title="Sửa"  class="p-button-secondary"><i class="fas fa-edit"></i></button>
+                    <button pButton type="button" onclick="confirm('Bạn chắc chắn muốn xóa không?')" (click)="remove(product.maNhom)" title="Xóa"  class="p-button-danger"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
         </ng-template>
@@ -34,61 +34,39 @@
         <ngb-pagination [collectionSize]="totalItems" [pageSize]="pageSize" [(page)]="page" [maxSize]="10" [rotate]="true" (pageChange)="loadPage($event)"></ngb-pagination>
     </div>
 </div>
+
+
 <!-- Add -->
 <p-dialog [(visible)]="displayAdd" [style]="{width: '30vw'}" [dismissableMask]="true" [modal]="true">
-    <!-- Content -->
-    <ng-template pTemplate="header">
-        <h3>Thêm nhóm đồ gia dụng</h3>
-    </ng-template>
-    <div style="width: 90%; margin-left: 5%;">
-        <label style="font-weight: bold;">Tên nhóm:</label>
-        <input type="text" class="form-control"  placeholder="Tên nhóm">
-        <label style="font-weight: bold;">Mô tả:</label>
-        <p-editor  [style]="{'height':'320px'}"></p-editor>
-    </div>
     
-    <p-footer>
-        <button type="submit" class="btn btn-primary waves-effect waves-light mr-2">
-            <i class="mdi mdi-check"></i>
-            Thêm
-        </button>
-        <button type="button" (click)="displayAdd = false" class="btn btn-danger waves-effect waves-light"> <i
-            class="mdi mdi-window-close"></i>
-            Huỷ</button>
-        </p-footer>
-    </p-dialog>
-    <!-- View -->
-    <!-- <p-dialog [(visible)]="displayView" [style]="{width: '60vw'}" [modal]="true">
-        <ng-template pTemplate="header">
-            <h3></h3>
-        </ng-template>
-        <h1 *ngIf="displayView == true">{{detail.tieuDe}}</h1>
-        <div style="max-width: 100%; z-index: 9999;" [innerHTML]="detail.noiDung" *ngIf="displayView == true"></div>
-        <p-footer>
-            <button type="button" (click)="displayView = false" class="btn btn-danger waves-effect waves-light"> <i
-                class="mdi mdi-window-close"></i>
-                Đóng</button>
-            </p-footer>
-        </p-dialog> -->
-        <!-- Edit -->
-        <!-- <p-dialog [(visible)]="displayEdit" [style]="{width: '60vw'}" [dismissableMask]="true" [modal]="true">
-            <ng-template pTemplate="header">
-                <h3>Câp nhật tin tức</h3>
-            </ng-template>
-            <div style="width: 90%; margin-left: 5%;">
-                <label style="font-weight: bold;">Tiêu đề:</label>
-                <input type="text"  class="form-control"  placeholder="Tiêu đề">
-                <label style="font-weight: bold;">Nội dung:</label>
-                <p-editor  [style]="{'height':'320px'}"></p-editor>
+    <form (ngSubmit)="AddNew(form)" #form="ngForm">
+        <h3>Thêm nhóm sản phẩm mới </h3>
+        <div style="width: 100%; margin-left: 5%;">
+            <input type="hidden" name="maNhom"  ngModel #maNhom="ngModel" >
+            <label style="font-weight: bold;">Tên nhóm:</label>
+            <input type="text" class="form-control" name="tenNhom"  ngModel #tenNhom="ngModel" placeholder="Tên nhóm sản phẩm">
+            <label style="font-weight: bold;">Mô tả:</label>
+            <p-editor [style]="{'height':'320px'}" name="moTa"  ngModel #moTa="ngModel"></p-editor>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="mdi mdi-check"></i>Thêm</button>
+                <button type="button" (click)="displayAdd=false" class="btn btn-danger btn-lg btn-block "> <i class="mdi mdi-window-close"></i>Huỷ</button>
             </div>
-            
-            <p-footer>
-                <button type="submit"  class="btn btn-primary waves-effect waves-light mr-2">
-                    <i class="mdi mdi-check"></i>
-                    Cập nhật
-                </button>
-                <button type="button" (click)="displayAdd = false" class="btn btn-danger waves-effect waves-light">
-                    <button type="button" (click)="displayEdit = false" class="btn btn-danger waves-effect waves-light"> <i
-                        class="mdi mdi-window-close"></i>
-                        Huỷ</button>
-                    </p-footer> -->
+        </div>
+    </form>
+</p-dialog>
+<!-- Edit -->
+<p-dialog [(visible)]="isEdit" [style]="{width: '30vw'}" [dismissableMask]="true" [modal]="true">
+    <form action="" (ngSubmit)="SaveData()" #form="ngForm">
+        <h3>Sửa thông tin nhóm sản phẩm</h3>
+        <div style="width: 90%; margin-left: 5%;">
+            <label style="font-weight: bold;">Tên nhóm:</label>
+            <input type="text" class="form-control"  placeholder="Tên nhóm"  [(ngModel)]="product_group.tenNhom" name="tenNhom" >
+            <label style="font-weight: bold;">Mô tả:</label>
+            <p-editor  [style]="{'height':'320px'}" name="moTa"  ngModel #moTa="ngModel" [(ngModel)]="product_group.moTa"></p-editor>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary btn-lg btn-block"  ><i class="mdi mdi-check"></i> Lưu </button>
+                <button type="button" (click)="isEdit=false" class="btn btn-danger btn-lg btn-block"> <i class="mdi mdi-window-close"></i>Huỷ</button>
+            </div>
+        </div>
+    </form>
+</p-dialog>

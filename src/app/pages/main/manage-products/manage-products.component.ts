@@ -5,6 +5,8 @@ import 'rxjs/add/operator/takeUntil';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, NgForm } from '@angular/forms';
 import { SanPham } from '../../../shared/models/SanPham';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 interface Category {
   maLoai: string,
   tenLoai: string
@@ -33,7 +35,7 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
   
   formProduct: FormBuilder;
   
-  constructor(private fb: FormBuilder,injector: Injector,private route: ActivatedRoute, private router: Router) {
+  constructor(private fb: FormBuilder,injector: Injector,private route: ActivatedRoute, private router: Router, private httpclient: HttpClient) {
     super(injector);
     
     this.product = new SanPham();
@@ -79,22 +81,50 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
     if (form != null)
     form.resetForm();
   }
+
+  Anh: any = null;
+  onChange(event: any) {
+    this.Anh = event.target.files[0];
+    
+    // var reader = new FileReader();
+    // reader.readAsDataURL(event.target.files[0]);
+    // reader.onload = (e: any) => {
+    //   this.image = e.target.result;
+    // }
+    
+    
+  }
+  upload(file?: any): Observable<any> {
+    const apiURL = 'http://localhost:8961/api/SanPham/upload';
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    return this.httpclient.post(apiURL, formData).pipe();
+  }
+  
+ 
   AddNewProduct(form: NgForm) {
     console.log(form.value);
     try {
-      this._api.post('/api/SanPham/create-product', form.value).takeUntil(this.unsubscribe).subscribe(res => {
-        alert("Thêm mới thành công");
-        this.resetform(form);
-        this.search();
-        this.displayAdd = false;
-      }, err => { console.log(err); });
+      this.upload(this.Anh).subscribe(res => {
+        const sanpham: SanPham = new SanPham();
+        sanpham.MaSanPham="";
+        sanpham.MaLoai = form.controls['maLoai'].value;
+        sanpham.MaHang = form.controls['maHang'].value;
+        sanpham.TenSanPham = form.controls['tenSanPham'].value;
+        sanpham.XuatXu = form.controls['xuatXu'].value;
+        sanpham.BaoHanh = form.controls['baoHanh'].value;
+        sanpham.MauSac = form.controls['mauSac'].value;
+        sanpham.GiaBan = form.controls['giaBan'].value;
+        sanpham.MoTa = form.controls['moTa'].value;
+        sanpham.Anh = res.filePath;
+        this._api.post('/api/SanPham/create-product', sanpham).takeUntil(this.unsubscribe).subscribe(res => {
+          alert("Thêm mới thành công");
+          this.resetform(form);
+          this.search();
+          this.displayAdd = false;
+        }, err => { console.log(err); });
+      });
       
-      // product.photosmall=this.file2.name;
-      // this._api.addnews(news).subscribe(res=>{
-      // this.news?.push(res);
-      // alert("Thêm Thành Công");
-      //  this.router.navigate(['/news_management']);
-      // });
     }
     catch (error) {
       console.log(error);

@@ -1,9 +1,7 @@
 <div class="top">
-    <h2>Danh sách sản phẩm</h2>
+    <h2>Danh sách đơn hàng</h2>
     <div class="right">
-        <!-- <button class="btnX" pButton type="button" (click)="showAdd()" lable="Thêm"></button> -->
         <p-button icon="pi pi-external-link" label="Thêm"></p-button>
-        
     </div>
 </div>
 
@@ -36,7 +34,7 @@
             </div>
         </form> 
     </p-panel>
-    <p-table selectionMode="single" [value]="orders" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}"  [dataKey]="'maHoaDon'" (onRowExpand)="onRowExpand($event)">
+    <p-table selectionMode="single" [value]="orders" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}"  [dataKey]="'maDonHang'" (onRowExpand)="onRowExpand($event)">
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 50px; text-align: center;">
@@ -72,16 +70,6 @@
                     <button pButton type="button" (click)="openUpdateModal(item)" title="Sửa"  class="p-button-secondary"><i class="fas fa-edit"></i></button>
                     <button pButton type="button" title="Xóa"  class="p-button-danger"><i class="fas fa-trash"></i></button>
                 </td>
-                <!-- <td class="action-col" >
-                    <div class="btn-group">
-                        <button title="" class="btn btn-xs btn-white btn-default"  (click)="openUpdateModal(item)">  
-                            <i class="ace-icon fa fa-edit"></i>
-                        </button>
-                        <button title="" class="btn btn-xs btn-white btn-default" (click)="onDelete(item)">
-                            <i class="ace-icon fa fa-trash"></i>
-                        </button>
-                    </div>  
-                </td> -->
             </tr>
         </ng-template>
         <ng-template let-emp pTemplate="rowexpansion">

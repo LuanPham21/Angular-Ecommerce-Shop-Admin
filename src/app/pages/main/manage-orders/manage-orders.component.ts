@@ -51,10 +51,10 @@ export class ManageOrdersComponent extends BaseComponent implements OnInit {
   } 
   onRowExpand(row) {
     this.doneSetup = false; 
+    debugger;
     this._api.get('/api/DonHang/get-by-id/'+ row.data.maDonHang).subscribe((res:any) => {
       this.orderdetail = res;
       this.doneSetup = true; 
-      debugger;
     });
   }
   search() { 
@@ -89,7 +89,6 @@ export class ManageOrdersComponent extends BaseComponent implements OnInit {
    
   }
   public Them() {
-    debugger;
     let idx = this.SanPhams.findIndex(x => x.maSanPham == this.SanPham);
     if (idx !== -1) {
       let _item_name = this.SanPhams[idx].tenSanPham;
@@ -97,6 +96,8 @@ export class ManageOrdersComponent extends BaseComponent implements OnInit {
       this.orderdetail.listjson_chitiet.push({ tenSanPham: _item_name, maDonHang: this.orderdetail.maDonHang, maSanPham: this.SanPham, soLuong: this.soLuong, giaBan: _price });
     }
   }
+
+
   Xoa(SanPham) {
     let idx = this.orderdetail.listjson_chitiet.findIndex(x => x.maSanPham == SanPham.maSanPham);
     if (idx !== -1) {

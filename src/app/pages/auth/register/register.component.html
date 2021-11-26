@@ -16,26 +16,58 @@
                                 <h4 class="font-size-18 mt-2 text-center">Free Register</h4>
                                 <p class="text-muted text-center mb-4">Get your free Admiria account now.</p>
                                 
-                                <form class="form-horizontal" action="index.html">
-                                    
+                                <form class="form-horizontal" [formGroup]="frmRegister" (ngSubmit)="onSubmit(frmRegister.value)" >
                                     <div class="mb-3">
-                                        <label class="form-label" for="useremail">Email</label>
-                                        <input type="email" class="form-control" id="useremail" placeholder="Enter email">
+                                        <label class="form-label" for="hoten">Họ tên</label>
+                                        <input type="text" class="form-control" formControlName="HoTen" id="hoten" placeholder="Nhập họ tên">
+                                        <label class="col alert alert-danger" role="alert" *ngIf="frmRegister.controls.HoTen?.errors?.required  && frmRegister.controls.Hoten?.touched " >
+                                            Họ tên là rỗng hoặc không đúng định dạng!
+                                        </label>
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label class="form-label" for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                        <label class="form-label" for="email">Email</label>
+                                        <input type="email" class="form-control" formControlName="Email" id="email" placeholder="Nhập email">
+                                        <label class="col alert alert-danger" role="alert" *ngIf="(frmRegister.controls.Email?.errors?.required || frmRegister.controls.Email?.errors?.Email) && frmRegister.controls.Email?.touched " >
+                                            Email là rỗng hoặc không đúng định dạng!
+                                        </label>
+                                    </div>
+                                   
+                                    <div class="mb-3">
+                                        <label class="form-label" for="username">Tài khoản</label>
+                                        <input type="text" class="form-control" formControlName="TaiKhoan" id="username" placeholder="Nhập tài khoản">
+                                        <label class="col alert alert-danger" role="alert" *ngIf="frmRegister.controls.TaiKhoan?.errors?.required  && frmRegister.controls.TaiKhoan?.touched " >
+                                            Tài khoản là rỗng hoặc không đúng định dạng!
+                                        </label>
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label class="form-label" for="userpassword">Password</label>
-                                        <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                                        <label class="form-label" for="ngasinh">Ngày sinh</label>
+                                        <input type="date" class="form-control" formControlName="NgaySinh" id="ngaysinh">
+                                        <label class="col alert alert-danger" role="alert" *ngIf="frmRegister.controls.NgaySinh?.errors?.required  && frmRegister.controls.NgaySinh?.touched " >
+                                            Ngày sinh là rỗng hoặc không đúng định dạng!
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label" for="diachi">Địa chỉ</label>
+                                        <input type="text" class="form-control" formControlName="DiaChi" id="diachi" placeholder="Nhập địa chỉ">
+                                        <label class="col alert alert-danger" role="alert" *ngIf="frmRegister.controls.DiaChi?.errors?.required  && frmRegister.controls.DiaChi?.touched " >
+                                            Tài khoản là rỗng hoặc không đúng định dạng!
+                                        </label>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="password">Mật khẩu</label>
+                                        <input type="password" class="form-control" formControlName="MatKhau" id="password" placeholder="Nhập mật khẩu">
+                                        <label class="col alert alert-danger" role="alert" *ngIf="(frmRegister.controls.MatKhau?.errors?.required || frmRegister.controls.MatKhau?.errors?.minlength) && frmRegister.controls.password?.touched" >
+                                                Mật khẩu là rỗng hoặc đọ dài nhỏ hơn 6 ký tự!
+                                        </label>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <div class="text-end">
-                                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Register</button>
+                                            <button [disabled]="!frmRegister.valid" class="btn btn-primary w-md waves-effect waves-light" type="submit">Đăng ký</button>
                                         </div>
                                     </div>
                                     

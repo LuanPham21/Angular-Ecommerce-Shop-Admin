@@ -76,7 +76,8 @@
               "src/assets/libs/c3/c3.min.js",
               "src/assets/libs/jquery-knob/jquery.knob.min.js",
               "src/assets/js/pages/dashboard.init.js",
-              "./node_modules/quill/dist/quill.js"
+              "./node_modules/quill/dist/quill.js",
+              "./node_modules/chart.js/dist/Chart.js"
             ]
           },
           "configurations": {

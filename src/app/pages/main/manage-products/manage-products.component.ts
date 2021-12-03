@@ -117,6 +117,7 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
         sanpham.GiaBan = form.controls['giaBan'].value;
         sanpham.MoTa = form.controls['moTa'].value;
         sanpham.Anh = res.filePath;
+        debugger;
         this._api.post('/api/SanPham/create-product', sanpham).takeUntil(this.unsubscribe).subscribe(res => {
           alert("Thêm mới thành công");
           this.resetform(form);

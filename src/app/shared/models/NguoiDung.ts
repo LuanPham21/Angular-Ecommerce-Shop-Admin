@@ -1,4 +1,4 @@
-import { Role } from "./role";
+import { Role } from "./Role";
 export class NguoiDung {
     MaNguoiDung: number;
     HoTen: string;

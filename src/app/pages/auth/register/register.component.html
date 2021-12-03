@@ -64,7 +64,14 @@
                                                 Mật khẩu là rỗng hoặc đọ dài nhỏ hơn 6 ký tự!
                                         </label>
                                     </div>
-                                    
+                                    <div class="mb-3">
+                                        <label class="form-label" for="userpassword">Nhập lại mật khẩu</label>
+                                        <input type="password" formControlName="NhapLaiMatKhau" class="form-control" id="userpassword" placeholder="Enter password">
+                                    </div>
+                                    <div *ngIf="submitted && frmRegister.controls.NhapLaiMatKhau.errors" class="invalid-feedback">
+                                        <div *ngIf="frmRegister.controls.NhapLaiMatKhau.errors.required">Xác nhận lại mật khẩu là bắt buộc</div>
+                                        <div *ngIf="frmRegister.controls.NhapLaiMatKhau.errors.mustMatch">Xác thực lại mật khẩu không đúng</div>
+                                    </div>
                                     <div class="mb-3">
                                         <div class="text-end">
                                             <button [disabled]="!frmRegister.valid" class="btn btn-primary w-md waves-effect waves-light" type="submit">Đăng ký</button>

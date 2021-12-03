@@ -3,12 +3,14 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard, RoleGuard } from './core/auth.guard';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { UnauthorizedComponent } from './shared/components/unauthorized/unauthorized.component';
+import { Role } from './shared/models/Role';
 
 const routes: Routes = [
   { 
     path: '', 
     loadChildren: () => import('./pages/main/main.module').then(m => m.MainModule),
     canActivate: [AuthGuard]
+    // canActivate: [RoleGuard], data: { roles: [Role.Admin] },
   },
   { 
     path: 'auth', 

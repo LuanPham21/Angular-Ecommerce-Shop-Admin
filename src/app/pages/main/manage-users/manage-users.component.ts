@@ -4,7 +4,7 @@ import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
-import { MustMatch } from '../../../helpers/must-match.validator';
+import { MustMatch } from '../../../core/helper/must-match.validator';
 
 @Component({
   selector: 'app-manage-users',

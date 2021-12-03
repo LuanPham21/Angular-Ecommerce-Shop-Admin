@@ -24,6 +24,8 @@ import {TableModule} from 'primeng/table';
 import { RoleGuard } from '../../core/auth.guard';
 import { Role } from '../../shared/models/Role';
 import { DateVNPipe } from '../../shared/pipes/DateVN.pipe';
+import { ManageBestSellingComponent } from './manage-best-selling/manage-best-selling.component';
+import {ChartModule} from 'primeng/chart';
 
 export const mainRoute: Routes = [
   {
@@ -53,7 +55,9 @@ export const mainRoute: Routes = [
       },
       {
         path: 'manage-products',
-        component: ManageProductsComponent
+        component: ManageProductsComponent,
+        // canActivate: [RoleGuard], data: { roles: [Role.Admin] },
+
       },
       {
         path: 'manage-users',
@@ -64,6 +68,12 @@ export const mainRoute: Routes = [
       {
         path: 'manage-orders',
         component: ManageOrdersComponent,
+      },
+      {
+        path: 'manage-best-selling',
+        component: ManageBestSellingComponent,
+        // canActivate: [RoleGuard], data: { roles: [Role.Admin] },
+       
       },
     ]
   }
@@ -82,8 +92,9 @@ export const mainRoute: Routes = [
     ButtonModule,
     DropdownModule,
     PanelModule,
-    TableModule
+    TableModule,
+    ChartModule
   ],
-  declarations: [MainComponent, DashboardComponent, ManageCategoriesComponent, ManageProductsGroupComponent, ManageProductsComponent, ManageUsersComponent, ManageOrdersComponent, ManageProductBrandComponent, DateVNPipe]
+  declarations: [MainComponent, DashboardComponent, ManageCategoriesComponent, ManageProductsGroupComponent, ManageProductsComponent, ManageUsersComponent, ManageOrdersComponent, ManageProductBrandComponent, DateVNPipe, ManageBestSellingComponent]
 })
 export class MainModule { }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../../core/authentication.service';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { MustMatch } from 'src/app/core/helper/must-match.validator';
 
 @Component({
   selector: 'app-login',
@@ -31,9 +32,12 @@ export class LoginComponent implements OnInit {
     
     ngOnInit(): void {
       this.frmLogin = this.formBuilder.group({
-        TaiKhoan: ['', Validators.required],
-        MatKhau: ['', Validators.required],
+        TaiKhoan: ['', [Validators.required]],
+        MatKhau: [['', Validators.required]],
+        NhapLaiMatKhau: [['', Validators.required]],
         remember: [''],
+      },{
+        validator: MustMatch('MatKhau', 'NhapLaiMatKhau')
       });
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
@@ -50,20 +54,12 @@ export class LoginComponent implements OnInit {
         return;
       }
       this.loading = true;
-      this.authenticationService
-      .login(this.f.TaiKhoan.value, this.f.MatKhau.value)
-      .pipe(first())
-      .subscribe(
-        (data) => {
-          this.router.navigate([this.returnUrl]);
-        },
-        (error) => {
-          alert("Đăng nhập thất bại");
-          this.loading = false;   
-        }
-        );
-      }
-      
-      
+      this.authenticationService.login(this.f.TaiKhoan.value, this.f.MatKhau.value).pipe(first()).subscribe((data) => {
+        this.router.navigate([this.returnUrl]);
+      },(error) => {
+        alert("Đăng nhập thất bại");
+        this.loading = false;   
+      });
     }
-    
+  }
+  

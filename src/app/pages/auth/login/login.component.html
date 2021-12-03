@@ -19,18 +19,26 @@
                             <form class="form-horizontal" [formGroup]="frmLogin" (ngSubmit)="onSubmit()">
 
                                 <div class="mb-3">
-                                    <label class="form-label" for="username">Username</label>
+                                    <label class="form-label" for="username">Tài khoản</label>
                                     <input type="text" formControlName="TaiKhoan" class="form-control" id="username" placeholder="Enter username">
                                 </div>
                                 <div *ngIf="submitted && f.TaiKhoan.errors" class="invalid-feedback">
                                     <div *ngIf="f.TaiKhoan.errors.required">Chưa nhập tài khoản!</div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="userpassword">Password</label>
+                                    <label class="form-label" for="userpassword">Mật khẩu</label>
                                     <input type="password" formControlName="MatKhau" class="form-control" id="userpassword" placeholder="Enter password">
                                 </div>
                                 <div *ngIf="submitted && f.MatKhau.errors" class="invalid-feedback">
                                     <div *ngIf="f.MatKhau.errors.required">Chưa nhập mật khẩu!</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="userpassword">Nhập lại mật khẩu</label>
+                                    <input type="password" formControlName="NhapLaiMatKhau" class="form-control" id="userpassword" placeholder="Enter password">
+                                </div>
+                                <div *ngIf="submitted && f.NhapLaiMatKhau.errors" class="invalid-feedback">
+                                    <div *ngIf="f.NhapLaiMatKhau.errors.required">Xác nhận lại mật khẩu là bắt buộc</div>
+                                    <div *ngIf="f.NhapLaiMatKhau.errors.mustMatch">Xác thực lại mật khẩu không đúng</div>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-sm-6">

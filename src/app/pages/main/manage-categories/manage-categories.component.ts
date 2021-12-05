@@ -82,7 +82,6 @@ export class ManageCategoriesComponent extends BaseComponent implements OnInit {
   }
   
   AddNew(form: NgForm) {
-    console.log(form.value);
     try {
       this.upload(this.Anh).subscribe(res => { 
         const loaiSanPham: LoaiSanPham = new LoaiSanPham();
@@ -91,8 +90,7 @@ export class ManageCategoriesComponent extends BaseComponent implements OnInit {
         loaiSanPham.MaNhom = form.controls['maNhom'].value;
         loaiSanPham.MoTa = form.controls['moTa'].value;
         loaiSanPham.Anh = res.filePath;
-        
-        this._api.post('/api/LoaiSanPham/create-category',form.value).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/LoaiSanPham/create-category',loaiSanPham).takeUntil(this.unsubscribe).subscribe(res => {
           alert("thêm mới thành công");
           this.resetform(form);
           this.search();
@@ -120,8 +118,8 @@ export class ManageCategoriesComponent extends BaseComponent implements OnInit {
         this.category.Anh = res.filePath;
         this._api.post('/api/LoaiSanPham/update-category', this.category).takeUntil(this.unsubscribe).subscribe(res => {
           alert("Cập nhật thành công");
-          this.search();
           this.isEdit = false;
+          this.search();
         }, err => { console.log(err); });
       });
     }

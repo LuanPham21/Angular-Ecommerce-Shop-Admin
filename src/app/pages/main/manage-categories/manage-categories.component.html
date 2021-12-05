@@ -51,7 +51,7 @@
                 <td style="text-align: center;">{{i+1}}</td>
                 <td style="text-align: center;">{{category.tenLoai}}</td>
                 <td>{{category.tenNhom}}</td>
-                <td>{{category.moTa}}</td>
+                <td [innerHtml]="category.moTa"></td>
                 <td>
                     <img src="../../../../assets/images/img/{{category.anh}}" width="150px" height="100px" alt=""> 
                 </td>

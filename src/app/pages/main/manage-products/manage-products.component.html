@@ -61,7 +61,7 @@
                 <td>{{product.xuatXu}}</td>
                 <td>{{product.baoHanh}}</td>
                 <td>{{product.mauSac}}</td>
-                <td>{{product.giaBan}}</td>
+                <td>{{product.giaBan  | currency: "VND"}}</td>
                 <td  [innerHtml]='product.moTa'></td>
                 <td><img src="../../../../assets/images/img/{{product.anh}}" width="150px" height="100px" alt=""></td>
                 <td  style="text-align: center;">

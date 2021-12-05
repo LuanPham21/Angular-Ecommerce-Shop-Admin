@@ -64,7 +64,7 @@
                 <td>{{item.sdtNhan}}</td>
                 <td>{{item.email}}</td>
                 <td>{{item.tinhTrang}}</td>
-                <td>{{item.tongTien}}</td>
+                <td>{{item.tongTien  | currency: "VND"}}</td>
                 <td>{{item.ngayDat | DateVN}}</td>
                 <td  style="text-align: center;">
                     <button pButton type="button" (click)="openUpdateModal(item)" title="Sửa"  class="p-button-secondary"><i class="fas fa-edit"></i></button>

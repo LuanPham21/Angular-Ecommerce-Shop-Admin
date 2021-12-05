@@ -16,7 +16,8 @@ export class ManageBestSellingComponent extends BaseComponent implements OnInit 
   public totalItems:any;
   public formsearch: any;
   public getBestSelling:any;
-  public tenSanPham:string;
+  public arrTenSanPham = [];
+  public arrSoLuong = [];
   constructor(private fb: FormBuilder,injector: Injector,private route: ActivatedRoute, private router: Router, private httpclient: HttpClient) {
     super(injector);
   }
@@ -25,39 +26,28 @@ export class ManageBestSellingComponent extends BaseComponent implements OnInit 
       'tenSanPham': ['']
     });
     this.search();
-  }
-
-  loadPage(page) { 
-    this._api.post('/api/ThongKe/get-sanpham-banchay',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
-      this.products = res.data;
-      this.totalItems =  res.totalItems;
-      this.pageSize = res.pageSize;
-    });
-  } 
-  
+  }  
   search() { 
     this.page = 1;
     this.pageSize = 5;
     this._api.post('/api/ThongKe/get-sanpham-banchay',{page: this.page, pageSize: this.pageSize, tenSanPham: this.formsearch.get('tenSanPham').value}).takeUntil(this.unsubscribe).subscribe(res => {
-      debugger;
-      // this.products = res.data;
       this.products = res;
-      this.totalItems =  res.totalItems;
-      this.pageSize = res.pageSize;
-      this.tenSanPham = this.products.data.tenSanPham.map((item:any)=>item.tenSanPham);
+      this.products.data.forEach(item => {
+        this.arrTenSanPham.push(item.tenSanPham);
+      });
+      this.products.data.forEach(item => {
+        this.arrSoLuong.push(item.slbc);
+      });
       this.getBestSelling = {
-    
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: this.arrTenSanPham,
         datasets: [
-            {
-                label: 'My First dataset',
-                backgroundColor: '#42A5F5',
-                data: [65, 59, 80, 81, 56, 55, 40]
-            },
+          {
+            label: 'Số lượng bán chạy',
+            backgroundColor: '#42A5F5',
+            data: this.arrSoLuong
+          },
         ]
       }
     });
   }
-
- 
 }

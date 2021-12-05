@@ -81,7 +81,7 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
     if (form != null)
     form.resetForm();
   }
-
+  
   Anh: any = null;
   onChange(event: any) {
     this.Anh = event.target.files[0];
@@ -101,9 +101,8 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
     return this.httpclient.post(apiURL, formData).pipe();
   }
   
- 
+  
   AddNewProduct(form: NgForm) {
-    console.log(form.value);
     try {
       this.upload(this.Anh).subscribe(res => {
         const sanpham: SanPham = new SanPham();
@@ -117,7 +116,6 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
         sanpham.GiaBan = form.controls['giaBan'].value;
         sanpham.MoTa = form.controls['moTa'].value;
         sanpham.Anh = res.filePath;
-        debugger;
         this._api.post('/api/SanPham/create-product', sanpham).takeUntil(this.unsubscribe).subscribe(res => {
           alert("Thêm mới thành công");
           this.resetform(form);
@@ -146,11 +144,15 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
   
   SaveData() {
     try {
-      this._api.post('/api/SanPham/update-product',this.product).takeUntil(this.unsubscribe).subscribe(res => {
-        alert("Cập nhật thành công");
-        this.search();
-        this.isEdit = false;
-      }, err => { console.log(err); });
+      this.upload(this.Anh).subscribe(res => { 
+        this.product.Anh = res.filePath;
+        this._api.post('/api/SanPham/update-product',this.product).takeUntil(this.unsubscribe).subscribe(res => {
+          alert("Cập nhật thành công");
+          this.isEdit = false;
+          this.search();
+        }, err => { console.log(err); });
+        
+      });
     }
     catch (error) {
       console.log(error);

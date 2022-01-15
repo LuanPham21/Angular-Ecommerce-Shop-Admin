@@ -1,10 +1,13 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../../core/base-component';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { MustMatch } from '../../../core/helper/must-match.validator';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-manage-users',
@@ -23,6 +26,9 @@ export class ManageUsersComponent extends BaseComponent implements OnInit {
   public formdata: any;
   submitted = false;
   public isCreate:boolean;
+
+  fileName = 'users.xlsx';
+  @ViewChild('user') htmlData:ElementRef;
   constructor(private fb: FormBuilder,injector: Injector,private route: ActivatedRoute, private router: Router) {
     super(injector);
   }
@@ -43,8 +49,6 @@ export class ManageUsersComponent extends BaseComponent implements OnInit {
   } 
   
   search() { 
-    this.page = 1;
-    this.pageSize = 5;
     this._api.post('/api/NguoiDung/search',{page: this.page, pageSize: this.pageSize, hoTen: this.formsearch.get('hoTen').value, taiKhoan: this.formsearch.get('taiKhoan').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.users = res.data;
       this.totalItems =  res.totalItems;
@@ -158,5 +162,29 @@ export class ManageUsersComponent extends BaseComponent implements OnInit {
       alert("Xóa thành công");
       this.search();
     },err=>{console.log(err)});
+  }
+
+  public openPDF():void {
+    let DATA = document.getElementById('user');
+    
+    html2canvas(DATA).then(canvas => {
+      
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+      
+      const FILEURI = canvas.toDataURL('image/png')
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+      
+      PDF.save('users.pdf');
+    });     
+  }
+  exportExcel():void {
+    let element = document.getElementById('user');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, this.fileName);
   }
 }

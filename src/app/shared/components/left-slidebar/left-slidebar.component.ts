@@ -12,10 +12,6 @@ export class LeftSlidebarComponent extends BaseComponent implements OnInit, Afte
   
   constructor(injector: Injector, private router: Router, private authenticationService: AuthenticationService) {
     super(injector);
-     // redirect to home if already logged in
-    //  if (this.authenticationService.userValue) {
-    //   this.router.navigate(['/auth/login']);
-    // }
   }
   ngOnInit() {}
   onLogin(){

@@ -1,5 +1,7 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from 'src/app/core/base-component';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-manage-amount',
@@ -16,6 +18,8 @@ export class ManageAmountComponent extends BaseComponent implements OnInit {
   public sldh:any;
   public slnd:any;
   public sltt:any;
+
+  @ViewChild('amount') htmlData:ElementRef;
   constructor(injector: Injector) {
     super(injector);
   }
@@ -68,5 +72,22 @@ export class ManageAmountComponent extends BaseComponent implements OnInit {
         }); 
       }); 
     }); 
+  }
+
+  public openPDF():void {
+    let DATA = document.getElementById('amount');
+    
+    html2canvas(DATA).then(canvas => {
+      
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+      
+      const FILEURI = canvas.toDataURL('image/png')
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+      
+      PDF.save('amount.pdf');
+    });     
   }
 }

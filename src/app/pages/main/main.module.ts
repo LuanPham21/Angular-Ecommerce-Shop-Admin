@@ -68,6 +68,7 @@ export const mainRoute: Routes = [
       {
         path: 'manage-orders',
         component: ManageOrdersComponent,
+        canActivate: [RoleGuard], data: { roles: [Role.Admin] },
       },
       {
         path: 'manage-blogs',
@@ -76,10 +77,12 @@ export const mainRoute: Routes = [
       {
         path: 'manage-best-selling',
         component: ManageBestSellingComponent,
+        canActivate: [RoleGuard], data: { roles: [Role.Admin] },
       },
       {
         path: 'manage-amount',
         component: ManageAmountComponent,
+        canActivate: [RoleGuard], data: { roles: [Role.Admin] },
       },
     ]
   }

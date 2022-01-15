@@ -3,6 +3,7 @@
     <div class="right">
         <p-button (click)="showAdd()" icon="pi pi-external-link" label="Thêm"></p-button>
         
+        <p-button (click)="exportExcel()" icon="pi pi-external-link" label="Export data"></p-button>
     </div>
 </div>
 <div class="bot">
@@ -30,12 +31,17 @@
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="{{totalItems}}">All</option>
                 </select>
             </fieldset>
         </div> 
         <!-- End Sort Select Option -->
+        <div class="col-md-4 text-right">
+            <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
+        </div>
     </p-panel>
-    <p-table selectionMode="single" [value]="categories" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}" >
+    <p-table id="category" selectionMode="single" [value]="categories" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}" >
         <ng-template pTemplate="header">
             <tr>
                 <th>STT</th>

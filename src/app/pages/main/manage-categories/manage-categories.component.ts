@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../../core/base-component';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
@@ -7,6 +7,9 @@ import { FormBuilder, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { LoaiSanPham } from 'src/app/shared/models/LoaiSanPham';
 import { HttpClient } from '@angular/common/http';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 
 interface ProductsGroup {
   maNhom: string,
@@ -21,13 +24,15 @@ export class ManageCategoriesComponent extends BaseComponent implements OnInit {
   public categories: any;
   public category: any;
   public page = 1;
-  public pageSize = 3;
+  public pageSize = 5;
   public totalItems:any;
   public productsGroup: ProductsGroup[];
   selectedProductGroup: ProductsGroup;
   public formsearch: any;
   isEdit: boolean = false;
   
+  fileName = 'category.xlsx';
+  @ViewChild('category') htmlData:ElementRef;
   constructor(private fb: FormBuilder, private httpclient: HttpClient, injector: Injector, private route: ActivatedRoute, private router: Router) {
     super(injector);
     this.category = new LoaiSanPham();
@@ -133,5 +138,29 @@ export class ManageCategoriesComponent extends BaseComponent implements OnInit {
       alert("Xóa thành công");
       this.search();
     }, err => { console.log(err) });
+  }
+
+  public openPDF():void {
+    let DATA = document.getElementById('category');
+    
+    html2canvas(DATA).then(canvas => {
+      
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+      
+      const FILEURI = canvas.toDataURL('image/png')
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+      
+      PDF.save('categories.pdf');
+    });     
+  }
+  exportExcel():void {
+    let element = document.getElementById('category');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, this.fileName);
   }
 }

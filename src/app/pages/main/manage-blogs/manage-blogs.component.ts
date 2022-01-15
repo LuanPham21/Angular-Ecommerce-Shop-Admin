@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../../core/base-component';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
@@ -8,6 +8,9 @@ import { TinTuc } from '../../../shared/models/TinTuc';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/core/authentication.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-manage-blogs',
@@ -25,6 +28,8 @@ export class ManageBlogsComponent extends BaseComponent implements OnInit {
   user:any;
   formBlog: FormBuilder;
   
+  fileName = 'blogs.xlsx';
+  @ViewChild('blog') htmlData:ElementRef;
   constructor(
     private fb: FormBuilder,
     injector: Injector,
@@ -142,6 +147,29 @@ export class ManageBlogsComponent extends BaseComponent implements OnInit {
         this.search();
       },err=>{console.log(err)});
     }
-    
+
+    public openPDF():void {
+      let DATA = document.getElementById('blog');
+      
+      html2canvas(DATA).then(canvas => {
+        
+        let fileWidth = 208;
+        let fileHeight = canvas.height * fileWidth / canvas.width;
+        
+        const FILEURI = canvas.toDataURL('image/png')
+        let PDF = new jsPDF('p', 'mm', 'a4');
+        let position = 0;
+        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+        
+        PDF.save('blogs.pdf');
+      });     
+    }
+    exportExcel():void {
+      let element = document.getElementById('blog');
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, this.fileName);
+    }
   }
   

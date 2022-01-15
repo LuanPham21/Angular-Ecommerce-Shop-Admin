@@ -31,12 +31,17 @@
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="{{totalItems}}">All</option>
                 </select>
             </fieldset>
         </div> 
         <!-- End Sort Select Option -->
+        <div class="col-md-4 text-right">
+            <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
+        </div>
     </p-panel>
-    <p-table selectionMode="single" [value]="blogs" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}" >
+    <p-table id="blog" selectionMode="single" [value]="blogs" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}" >
         <ng-template pTemplate="header">
             <tr>
                 <th>STT</th>
@@ -113,7 +118,7 @@
             <p-editor [style]="{'height':'320px'}" name="noiDung"  ngModel #noiDung="ngModel" [(ngModel)]="blog.noiDung"></p-editor>
             <label style="font-weight: bold;">Người đăng:</label>
             <input type="text" class="form-control" placeholder="Người đăng" name="maNguoiDung"  ngModel #maNguoiDung="ngModel"  [(ngModel)]="blog.nguoiDang" >
-            <label style="font-weight: bold;">Giá bán:</label>
+            <label style="font-weight: bold;">Ngày đăng:</label>
             <input type="date" class="form-control" name="ngaydang"  ngModel #ngayDang="ngModel" [(ngModel)]="blog.ngayDang">
             <label style="font-weight: bold;">Hình ảnh:</label>
             <div style="display: flex;">

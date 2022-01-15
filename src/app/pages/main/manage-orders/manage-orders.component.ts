@@ -1,10 +1,19 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../../core/base-component';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators} from '@angular/forms';
 declare var $: any;
+
+interface Status {
+  label: string,
+  value: string
+}
+
 @Component({
   selector: 'app-manage-orders',
   templateUrl: './manage-orders.component.html',
@@ -28,10 +37,16 @@ export class ManageOrdersComponent extends BaseComponent implements OnInit {
   public showUpdateModal: any;
   submitted = false;
   display: boolean = false;
+
+  public status: Status[];
+  selectedSatus: Status;
+ 
+  fileName = 'orders.xlsx';
+  @ViewChild('order') order:ElementRef;
+ 
   constructor(private fb: FormBuilder, injector: Injector,private route: ActivatedRoute, private router: Router) {
     super(injector);
   }
-  
   ngOnInit(): void {
     this.formsearch = this.fb.group({
       'hoTen': [''],
@@ -71,6 +86,7 @@ export class ManageOrdersComponent extends BaseComponent implements OnInit {
     
     this.orderdetail.hoTen = this.formdata.get('hoTen').value;
     this.orderdetail.diaChiNhan = this.formdata.get('diaChiNhan').value;
+    this.orderdetail.tinhTrang = this.formdata.get('tinhTrang').value;
     
     let orderdetail_new =  $.extend(true, {},   this.orderdetail);
     orderdetail_new.listjson_chitiet = this.compare(this.origin_listjson_chitiet, this.orderdetail.listjson_chitiet, 'maSanPham');
@@ -116,6 +132,7 @@ export class ManageOrdersComponent extends BaseComponent implements OnInit {
         this.formdata = this.fb.group({
           'hoTen': [this.orderdetail.hoTen, Validators.required],
           'diaChiNhan': [this.orderdetail.diaChiNhan],
+          'tinhTrang': [this.orderdetail.tinhTrang],
           'soLuong': [],
           'sanpham': [],
           'abc': [],
@@ -123,10 +140,54 @@ export class ManageOrdersComponent extends BaseComponent implements OnInit {
         this._api.get('/api/SanPham/get-all').takeUntil(this.unsubscribe).subscribe((res: any) => {
           this.SanPhams = res;
         });
+        this.status =  [
+          {label:'Chờ xử lý',value:'Chờ xử lý'},
+          {label:'Đã xử lý',value:'Đã xử lý'},
+        ];  
         this.doneSetupForm = true;
       });
     }, 700);
   }
   
+  public openPDF():void {
+    let DATA = document.getElementById('order');
+    
+    html2canvas(DATA).then(canvas => {
+      
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+      
+      const FILEURI = canvas.toDataURL('image/png')
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+      
+      PDF.save('orders.pdf');
+    });     
+  }
   
+  public openPDFOrderDetails():void {
+    let DATA = document.getElementById('order_details');
+    
+    html2canvas(DATA).then(canvas => {
+      
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+      
+      const FILEURI = canvas.toDataURL('image/png')
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+      
+      PDF.save('order_details.pdf');
+    });     
+  }
+
+  exportExcel():void {
+    let element = document.getElementById('order');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, this.fileName);
+  }
 }

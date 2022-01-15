@@ -4,6 +4,7 @@
         <!-- <button class="btnX" pButton type="button" (click)="showAdd()" lable="Thêm"></button> -->
         <p-button (click)="showAdd()" icon="pi pi-external-link" label="Thêm"></p-button>
         
+        <p-button (click)="exportExcel()" icon="pi pi-external-link" label="Export data"></p-button>
     </div>
 </div>
 <div class="bot">
@@ -31,12 +32,18 @@
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
+                    <option value="20">50</option>
+                    <option value="{{totalItems}}">All</option>
                 </select>
             </fieldset>
         </div> 
         <!-- End Sort Select Option -->
+        <div class="col-md-4 text-right">
+            <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
+        </div>
     </p-panel>
-    <p-table selectionMode="single" [value]="products" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}" >
+    
+    <p-table id="product" selectionMode="single" [value]="products" styleClass="p-datatable-gridlines" [style]="{'margin-top': '2px', 'width': '100%'}" >
         <ng-template pTemplate="header">
             <tr>
                 <th>STT</th>
@@ -61,12 +68,13 @@
                 <td>{{product.xuatXu}}</td>
                 <td>{{product.baoHanh}}</td>
                 <td>{{product.mauSac}}</td>
-                <td>{{product.giaBan  | currency: "VND"}}</td>
+                <td style="color: red; font-weight: bold;">{{product.giaBan  | currency: "VND"}}</td>
                 <td  [innerHtml]='product.moTa'></td>
                 <td><img src="../../../../assets/images/img/{{product.anh}}" width="150px" height="100px" alt=""></td>
                 <td  style="text-align: center;">
                     <button pButton type="button" (click)="edit(product)" title="Sửa"  class="p-button-secondary"><i class="fas fa-edit"></i></button>
                     <button pButton type="button" (click)="delete(product.maSanPham)" title="Xóa"  class="p-button-danger"><i class="fas fa-trash"></i></button>
+                    
                 </td>
             </tr>
         </ng-template>

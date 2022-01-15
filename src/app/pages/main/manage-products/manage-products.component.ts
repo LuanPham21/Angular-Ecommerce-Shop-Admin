@@ -1,4 +1,7 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit,ViewChild, ElementRef } from '@angular/core';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 import { BaseComponent } from '../../../core/base-component';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/takeUntil';
@@ -7,6 +10,9 @@ import { FormBuilder, NgForm } from '@angular/forms';
 import { SanPham } from '../../../shared/models/SanPham';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+
+
+
 interface Category {
   maLoai: string,
   tenLoai: string
@@ -24,7 +30,7 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
   public products: any;
   public product: any;
   public page = 1;
-  public pageSize = 10;
+  public pageSize = 5;
   public totalItems:any;
   public formsearch: any;
   
@@ -32,9 +38,11 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
   selectedCategory: Category;
   public brands: Brand[];
   selectedBrand: Brand;
-  
   formProduct: FormBuilder;
-  
+
+
+  fileName = 'products.xlsx';
+  @ViewChild('product') htmlData:ElementRef;
   constructor(private fb: FormBuilder,injector: Injector,private route: ActivatedRoute, private router: Router, private httpclient: HttpClient) {
     super(injector);
     
@@ -57,8 +65,6 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
   } 
   
   search() { 
-    this.page = 1;
-    this.pageSize = 5;
     this._api.post('/api/SanPham/search',{page: this.page, pageSize: this.pageSize, tenSanPham: this.formsearch.get('tenSanPham').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.products = res.data;
       this.totalItems =  res.totalItems;
@@ -165,4 +171,33 @@ export class ManageProductsComponent extends BaseComponent implements OnInit {
       this.search();
     },err=>{console.log(err)});
   }
+  public openPDF():void {
+    let DATA = document.getElementById('product');
+    
+    html2canvas(DATA).then(canvas => {
+      
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+      
+      const FILEURI = canvas.toDataURL('image/png')
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+      
+      PDF.save('products.pdf');
+    });     
+  }
+  exportExcel():void {
+    let element = document.getElementById('product');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, this.fileName);
+  }
+  // exportExcelToDatabase():void {
+  //   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.products);
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  //   XLSX.writeFile(wb, this.fileName);
+  // }
 }

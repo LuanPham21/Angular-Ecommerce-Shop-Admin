@@ -1,11 +1,16 @@
 <div id="best-selling">
-    <div class="top">
-        <h2>Biểu đồ sản phẩm bán chạy</h2>
-    </div>
-    <div class="col-md-4 text-right">
+  <div class="top d-flex justify-content-between">
+    <h2>Biểu đồ sản phẩm bán chạy</h2>
+    <button class="btn btn-success btn-block" (click)="openPDF()">
+      Download PDF
+    </button>
+  </div>
+  <!--  <div class="col-md-4 text-right">
         <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
-    </div>
-    <p-panel>
-        <p-chart type="bar" [data]="getBestSelling" ></p-chart>
+    </div> -->
+  <div class="ml-5">
+    <p-panel [style]="{'width': '70%'}">
+      <p-chart type="bar" [data]="getBestSelling"></p-chart>
     </p-panel>
+  </div>
 </div>
